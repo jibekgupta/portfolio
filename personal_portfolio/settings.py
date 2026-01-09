@@ -32,9 +32,16 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-insecure-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
 if os.getenv("ALLOWED_HOSTS"):
-    ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS").split(",") if h.strip()]
+    ALLOWED_HOSTS += [h.strip() for h in os.getenv("ALLOWED_HOSTS").split(",") if h.strip()]
+
+
+RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 CSRF_TRUSTED_ORIGINS = []
 if os.getenv("CSRF_TRUSTED_ORIGINS"):
@@ -130,7 +137,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STORAGES = {
