@@ -36,6 +36,9 @@ ALLOWED_HOSTS = []
 if os.getenv("ALLOWED_HOSTS"):
     ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS").split(",") if h.strip()]
 
+CSRF_TRUSTED_ORIGINS = []
+if os.getenv("CSRF_TRUSTED_ORIGINS"):
+    CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS").split(",") if o.strip()]
 
 # Application definition
 
@@ -149,3 +152,28 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 PORTFOLIO_CONTACT_TO_EMAIL = os.getenv('PORTFOLIO_CONTACT_TO_EMAIL')
+
+
+
+# -------------------------
+# Production security (Render)
+# -------------------------
+if not DEBUG:
+    # Render is HTTPS in production
+    SECURE_SSL_REDIRECT = True
+
+    # Behind a proxy/load balancer (Render)
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    # Cookies only over HTTPS
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # HSTS (start low, increase later)
+    SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "86400"))  # 1 day
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = False
+
+    # Extra hardening
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
