@@ -1,0 +1,27 @@
+{% extends "portfolio_web/base.html" %}
+{% load static %}
+
+{% block title %}Thanks | Jibek{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'portfolio_web/css/success.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="success-wrap">
+    <div class="card success-card">
+      <div class="success-badge" aria-hidden="true">✓</div>
+
+      <h1 class="success-title">Thanks for reaching out</h1>
+      <p class="muted success-text">
+        Your message has been received. I’ll respond as soon as possible.
+      </p>
+
+      <div class="btns success-cta">
+        <a class="btn primary" href="{% url 'projects' %}">View Projects</a>
+        <a class="btn" href="{% url 'home' %}">Back Home</a>
+        <a class="btn" href="{% url 'contact' %}">Send Another</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

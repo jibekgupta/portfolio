@@ -1,0 +1,43 @@
+{% extends "portfolio_web/base.html" %}
+{% load static %}
+
+{% block title %}About | Jibek{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'portfolio_web/css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="grid about-hero">
+    <div class="col-8">
+      <div class="card about-card">
+        <h1>About Me</h1>
+        <p class="muted">
+          Write 5–8 lines here: what you study, what you build, what kind of roles you want,
+          and 1–2 standout achievements.
+        </p>
+
+        <hr class="sep">
+
+        <h2 class="about-subhead">What I’m focused on</h2>
+        <p class="muted">Reliable NLP, retrieval systems, and applied ML workflows.</p>
+
+        <div class="btns about-cta">
+          <a class="btn primary" href="{% url 'projects' %}">Explore Projects</a>
+          <a class="btn" href="{% url 'contact' %}">Reach Out</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card about-side">
+        <h3>Highlights</h3>
+        <p class="muted about-highlights">
+          • Howard University, CS<br>
+          • Graduation: May 2026<br>
+          • Interests: ML/NLP + RAG<br>
+        </p>
+      </div>
+    </div>
+  </section>
+{% endblock %}

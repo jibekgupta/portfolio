@@ -1,0 +1,50 @@
+/* Projects page only */
+
+/* spacing for page header */
+.projects-header{
+  margin-top: 10px;
+}
+
+/* remove inline margin replacement */
+.projects-subtitle{
+  margin: 0;
+}
+
+/* spacing above grid */
+.projects-grid{
+  margin-top: 14px;
+}
+
+/* project card hover clarity */
+.project-card{
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+/* title hover affordance */
+.project-title a{
+  display: inline-block;
+}
+.project-title a:hover{
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  opacity: .95;
+}
+
+/* clamp blurb so cards stay aligned */
+.project-blurb{
+  overflow: hidden;
+
+  /* standard */
+  line-clamp: 3;
+
+  /* webkit (works in most browsers) */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+
+/* badges spacing */
+.project-badges{
+  margin-top: 8px;
+}

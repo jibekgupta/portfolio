@@ -1,0 +1,98 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="{% block meta_description %}Portfolio of Jibek Gupta — Full Stack Developer specializing in Django, Python, and modern web technologies.{% endblock %}" />
+
+  <title>{% block title %}Jibek Gupta — Portfolio{% endblock %}</title>
+
+  <!-- Base CSS (shared across all pages) -->
+  <link rel="preload" href="{% static 'portfolio_web/css/base.css' %}" as="style" />
+  <link rel="stylesheet" href="{% static 'portfolio_web/css/base.css' %}" />
+  {% block page_css %}{% endblock %}
+
+  <!-- Icons (optional) -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        referrerpolicy="no-referrer" />
+
+  {% block head_extras %}{% endblock %}
+</head>
+
+<body class="page-{{ request.resolver_match.url_name|default:'site' }}">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header" role="banner">
+    <div class="container nav">
+      <a class="brand" href="{% url 'home' %}" aria-label="Go to home page">
+        <span class="brand-badge" aria-hidden="true"></span>
+        <span>Jibek Gupta</span>
+      </a>
+
+      <nav id="primary-nav" class="nav-links" aria-label="Primary navigation">
+        <a class="pill {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
+        <a class="pill {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" href="{% url 'projects' %}">Projects</a>
+        <a class="pill {% if request.resolver_match.url_name == 'experience' %}active{% endif %}" href="{% url 'experience' %}">Experience</a>
+
+        <a class="pill"
+           href="{% static 'portfolio_web/docs/Jibek_Gupta_CV.pdf' %}"
+           target="_blank" rel="noopener"
+           aria-label="Open resume PDF in a new tab">
+          Resume
+        </a>
+
+        
+        <!--<a class="pill {% if request.resolver_match.url_name == 'skills' %}active{% endif %}" href="{% url 'skills' %}">Skills</a> -->
+        
+        <a class="pill {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+      </nav>
+
+      <button
+        class="mobile-menu-toggle"
+        type="button"
+        aria-label="Toggle mobile menu"
+        aria-controls="primary-nav"
+        aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content" class="main-content" role="main">
+    {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">
+            <div class="alert-text">{{ message }}</div>
+            <button class="alert-close" type="button" aria-label="Close">&times;</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-content">
+      <div class="footer-info">
+        <div class="footer-copyright">© {% now "Y" %} Jibek Gupta</div>
+        <div class="footer-description">
+         <a class="footer-link" href="{% url 'contact' %}">Let’s connect</a>
+        </div>
+      </div>
+
+      
+    </div>
+  </footer>
+
+  <script defer src="{% static 'portfolio_web/script.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

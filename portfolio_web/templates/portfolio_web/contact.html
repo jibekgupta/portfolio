@@ -1,0 +1,56 @@
+{% extends "portfolio_web/base.html" %}
+{% load static %}
+
+{% block title %}Contact | Jibek{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'portfolio_web/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="grid contact-hero">
+    <div class="col-6">
+      <div class="card contact-intro">
+        <h1>Contact</h1>
+        <p class="muted contact-text">
+          Send a message — it will be saved in the admin panel.
+          (We can also make it email you automatically next.)
+        </p>
+
+        <div class="badges">
+          <span class="badge">Fast reply</span>
+          <span class="badge">Open to roles</span>
+          <span class="badge">Collaboration</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <form method="post" class="card form contact-card">
+        {% csrf_token %}
+
+        <div class="field">
+          <label for="{{ form.name.id_for_label }}">Name</label>
+          {{ form.name }}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.email.id_for_label }}">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.subject.id_for_label }}">Subject</label>
+          {{ form.subject }}
+        </div>
+
+        <div class="field">
+          <label for="{{ form.message.id_for_label }}">Message</label>
+          {{ form.message }}
+        </div>
+
+        <button class="btn primary" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+{% endblock %}

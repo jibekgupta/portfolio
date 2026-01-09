@@ -1,0 +1,46 @@
+{% extends "portfolio_web/base.html" %}
+{% load static %}
+
+{% block title %}Projects | Jibek{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'portfolio_web/css/projects.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="projects-header">
+    <div class="card projects-intro">
+      <h1>Projects</h1>
+      <p class="muted projects-subtitle">
+        All projects I’ve built — click into any project for details.
+      </p>
+    </div>
+  </section>
+
+  <section class="grid projects-grid">
+    {% for p in projects %}
+      <article class="col-4 card project-card">
+        <h3 class="project-title">
+          <a href="{% url 'project_detail' p.slug %}">{{ p.title }}</a>
+        </h3>
+
+        <p class="muted project-blurb">{{ p.intro_blurb }}</p>
+
+        <div class="badges project-badges">
+          {% if p.is_featured %}
+            <span class="badge">Featured</span>
+          {% endif %}
+          {% if p.tech_stack %}
+            <span class="badge">{{ p.tech_stack }}</span>
+          {% endif %}
+        </div>
+      </article>
+    {% empty %}
+      <div class="col-12 card">
+        <p class="muted" style="margin:0;">
+          No projects yet — add some in Admin → Projects.
+        </p>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}

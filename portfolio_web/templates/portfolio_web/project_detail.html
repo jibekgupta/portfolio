@@ -1,0 +1,34 @@
+{% extends "portfolio_web/base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} | Jibek{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'portfolio_web/css/project_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+  <section class="project-detail">
+    <div class="card project-detail-card">
+      <h1 class="project-detail-title">{{ project.title }}</h1>
+
+      {% if project.tech_stack %}
+        <p class="muted project-detail-stack">{{ project.tech_stack }}</p>
+      {% endif %}
+
+      {% if project.description %}
+        <p class="muted project-detail-desc">{{ project.description }}</p>
+      {% endif %}
+
+      <div class="btns project-detail-cta">
+        {% if project.github_url %}
+          <a class="btn" href="{{ project.github_url }}" target="_blank" rel="noopener">GitHub</a>
+        {% endif %}
+        {% if project.live_url %}
+          <a class="btn primary" href="{{ project.live_url }}" target="_blank" rel="noopener">Live Demo</a>
+        {% endif %}
+        <a class="btn" href="{% url 'projects' %}">Back to Projects</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
