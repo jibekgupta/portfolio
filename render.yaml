@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: rp-portfolio
+    env: python
+    buildCommand: "bash build.sh"
+    startCommand: "gunicorn personal_portfolio.wsgi:application"
+    healthCheckPath: "/"
+    envVars:
+      - key: DEBUG
+        value: "0"
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: PORTFOLIO_CONTACT_TO_EMAIL
+        sync: false
