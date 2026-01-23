@@ -4,95 +4,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="color-scheme" content="light dark" />
-  <meta name="description" content="{% block meta_description %}Portfolio of Jibek Gupta — Full Stack Developer specializing in Django, Python, and modern web technologies.{% endblock %}" />
-
-  <title>{% block title %}Jibek Gupta — Portfolio{% endblock %}</title>
-
-  <!-- Base CSS (shared across all pages) -->
-  <link rel="preload" href="{% static 'portfolio_web/css/base.css' %}" as="style" />
-  <link rel="stylesheet" href="{% static 'portfolio_web/css/base.css' %}" />
+  <title>{% block title %}Jibek Gupta · Portfolio{% endblock %}</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'portfolio_web/css/style.css' %}" />
   {% block page_css %}{% endblock %}
-
-  <!-- Icons (optional) -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        referrerpolicy="no-referrer" />
-
-  {% block head_extras %}{% endblock %}
 </head>
 
-<body class="page-{{ request.resolver_match.url_name|default:'site' }}">
+<body>
   <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <header class="header" role="banner">
+  <header class="header">
     <div class="container nav">
-      <a class="brand" href="{% url 'home' %}" aria-label="Go to home page">
-        <span class="brand-badge" aria-hidden="true"></span>
+      <a class="brand" href="#home">
         <span>Jibek Gupta</span>
       </a>
 
-      <nav id="primary-nav" class="nav-links" aria-label="Primary navigation">
-        <a class="pill {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
-        <a class="pill {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" href="{% url 'projects' %}">Projects</a>
-        <a class="pill {% if request.resolver_match.url_name == 'experience' %}active{% endif %}" href="{% url 'experience' %}">Experience</a>
-
-        <a class="pill"
-           href="{% static 'portfolio_web/docs/Jibek_Gupta_CV.pdf' %}"
-           target="_blank" rel="noopener"
-           aria-label="Open resume PDF in a new tab">
-          Resume
-        </a>
-
-        
-        <!--<a class="pill {% if request.resolver_match.url_name == 'skills' %}active{% endif %}" href="{% url 'skills' %}">Skills</a> -->
-        
-        <a class="pill {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+      <nav id="primary-nav" class="nav-links" aria-label="Primary">
+        <a class="pill" href="{% url 'home' %}#home">Home</a>
+        <a class="pill" href="{% url 'home' %}#about">About</a>
+        <a class="pill" href="{% url 'home' %}#projects">Projects</a>
+        <a class="pill" href="{% url 'home' %}#contact">Contact</a>
       </nav>
 
-      <button
-        class="mobile-menu-toggle"
-        type="button"
-        aria-label="Toggle mobile menu"
-        aria-controls="primary-nav"
-        aria-expanded="false">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+      <button class="mobile-menu-toggle" type="button" aria-label="Toggle menu" aria-controls="primary-nav" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <main id="main-content" class="main-content" role="main">
-    {% if messages %}
-      <div class="container">
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }}" role="alert">
-            <div class="alert-text">{{ message }}</div>
-            <button class="alert-close" type="button" aria-label="Close">&times;</button>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-
+  <main id="main-content">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footer-content">
-      <div class="footer-info">
-        <div class="footer-copyright">© {% now "Y" %} Jibek Gupta</div>
-        <div class="footer-description">
-         <a class="footer-link" href="{% url 'contact' %}">Let’s connect</a>
-        </div>
+  <footer class="footer section">
+    <div class="container footer-inner">
+      <div>
+        <h4 class="footer-title">Jibek Gupta</h4>
+        <p class="faint">© 2026 All rights reserved.</p>
       </div>
-
-      
+      <div class="btns">
+        <a class="btn dark-outline" href="https://github.com/jibekgupta" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a class="btn dark-outline" href="https://linkedin.com/in/jibekgupta/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+      </div>
     </div>
   </footer>
 
-  <script defer src="{% static 'portfolio_web/script.js' %}"></script>
-  {% block scripts %}{% endblock %}
+  <script>
+    // Mobile menu
+    const menuBtn = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.nav-links');
+    if (menuBtn && nav) {
+      menuBtn.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('active');
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      header.classList.toggle('is-scrolled', window.scrollY > 50);
+    });
+
+  </script>
 </body>
 </html>

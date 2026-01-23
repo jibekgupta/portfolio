@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Skill, Experience, ContactMessage, Education
+from .models import Project, Skill, Experience, ContactMessage, Education, Certificate, Resume
 # Register your models here.
 
 
@@ -31,3 +31,15 @@ class ContactMessageAdmin(admin.ModelAdmin):
 class EducationAdmin(admin.ModelAdmin):
     list_display = ("degree", "institution", "start_year", "end_year", "gpa")
     search_fields = ("end_year", "institution")
+
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ("title", "issuer", "issued_date", "sort_order")
+    search_fields = ("title", "issuer")
+
+
+@admin.register(Resume)
+class ResumeAdmin(admin.ModelAdmin):
+    list_display = ("title", "updated_at")
+    search_fields = ("title",)

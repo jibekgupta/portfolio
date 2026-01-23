@@ -1,0 +1,260 @@
+/* ===============================
+   Jibek · Portfolio UI (v3 - Enhanced)
+   Premium Glassmorphism & Motion
+   – No external images referenced
+================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  /* Colors - Deeper and more vibrant */
+  --bg: #05070a;
+  --bg-2: #0b0f1a;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.07);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.15);
+
+  --text: #f0f2f5;
+  --muted: #a0a8b8;
+  --faint: #64748b;
+
+  --brand: #8b5cf6;    /* Vivid Violet */
+  --accent: #fbbf24;   /* Amber */
+  --cyan: #22d3ee;     /* Cyan */
+  
+  --shadow-1: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+  --radius: 24px;
+  --radius-sm: 14px;
+  --ring: 0 0 0 4px rgba(139, 92, 246, 0.2);
+
+  --max: 1140px;
+  --header-h: 80px;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f8fafc;
+    --bg-2: #ffffff;
+    --surface: rgba(15, 23, 42, 0.03);
+    --surface-2: rgba(15, 23, 42, 0.06);
+    --border: rgba(15, 23, 42, 0.08);
+    --text: #0f172a;
+    --muted: #475569;
+    --faint: #94a3b8;
+    --shadow-1: 0 20px 40px rgba(15, 23, 42, 0.1);
+  }
+}
+
+/* ---------- Reset & Base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animated Background Mesh */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(34, 211, 238, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+  animation: bgPulse 15s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { 
+  background: var(--surface-2); 
+  border-radius: 10px; 
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--faint); }
+
+/* ---------- Typography ---------- */
+h1, h2, h3 { 
+  margin: 0; 
+  font-weight: 800; 
+  line-height: 1.1; 
+  letter-spacing: -0.03em;
+  text-wrap: balance; /* Modern browser support for better heading wraps */
+}
+
+h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 1rem; }
+h2 { font-size: clamp(1.8rem, 5vw, 2.8rem); }
+.muted { color: var(--muted); }
+
+/* ---------- Navigation ---------- */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--header-h);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(5, 7, 10, 0.7);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+}
+
+.nav {
+  max-width: var(--max); margin: 0 auto; width: 100%; padding: 0 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.brand-badge {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--brand), var(--cyan));
+  position: relative; overflow: hidden;
+}
+
+/* Shine effect on brand */
+.brand-badge::after {
+  content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: rotate(45deg); animation: shine 4s infinite;
+}
+
+@keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
+
+.pill {
+  font-weight: 500; font-size: 0.95rem; padding: 8px 16px;
+  color: var(--muted); border-radius: 99px; transition: var(--transition);
+}
+.pill:hover, .pill.active { color: var(--text); background: var(--surface); }
+
+/* ---------- Hero Section ---------- */
+.hero {
+  padding: 120px 20px 80px;
+  text-align: center;
+  max-width: 900px; margin: 0 auto;
+}
+
+.hero h1 {
+  background: linear-gradient(to right, #fff, var(--muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Cards (The Star of the Show) ---------- */
+.card {
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  position: relative;
+  transition: var(--transition);
+  box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+
+.card::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-1), 0 0 20px rgba(139, 92, 246, 0.1);
+  background: var(--surface-2);
+}
+
+/* ---------- Projects Grid ---------- */
+.grid.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.tag {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+  font-weight: 700; color: var(--cyan); background: rgba(34, 211, 238, 0.1);
+  padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(34, 211, 238, 0.2);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  padding: 12px 24px; border-radius: 14px; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid var(--border-bright); background: var(--surface-2); color: var(--text);
+}
+
+.btn.primary {
+  background: var(--text); color: var(--bg); border: none;
+}
+
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+  filter: brightness(1.1);
+}
+
+/* ---------- Skills / Meters ---------- */
+.meter {
+  height: 8px; background: rgba(255,255,255,0.05);
+  border-radius: 4px; position: relative; overflow: hidden;
+}
+
+.meter span {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: linear-gradient(90deg, var(--brand), var(--cyan));
+  border-radius: 4px;
+  animation: slideIn 1.5s ease-out forwards;
+}
+
+@keyframes slideIn { from { width: 0%; } }
+
+/* ---------- Contact Section ---------- */
+.contact-card {
+  text-align: center; padding: 40px;
+  background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.08), transparent);
+}
+
+.icon {
+  width: 60px; height: 60px; background: var(--surface-2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; font-size: 24px; color: var(--accent);
+}
+
+/* ---------- Mobile Optimization ---------- */
+@media (max-width: 768px) {
+  .nav-links {
+    background: rgba(11, 15, 26, 0.95);
+    border: 1px solid var(--border);
+    padding: 20px;
+  }
+  
+  .hero { padding-top: 60px; }
+  
+  .card { padding: 20px; }
+}
+
+/* Accessibility: Skip Link */
+.skip-link {
+  position: absolute; top: -100px; left: 0;
+  background: var(--brand); color: white; padding: 10px 20px; z-index: 999;
+  transition: top 0.3s;
+}
+.skip-link:focus { top: 10px; }

@@ -16,6 +16,12 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def technologies_list(self):
+        if not self.tech_stack:
+            return []
+        return [t.strip() for t in self.tech_stack.split(",") if t.strip()]
     
 
 class Skill(models.Model):
@@ -75,3 +81,29 @@ class Education(models.Model):
     
     def __str__(self):
         return f"{self.degree} — {self.institution}"
+
+
+class Certificate(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    issuer = models.CharField(max_length=200, blank=True)
+    issued_date = models.DateField(null=True, blank=True)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["sort_order", "-issued_date", "title"]
+
+    def __str__(self):
+        return self.title
+
+
+class Resume(models.Model):
+    title = models.CharField(max_length=200, default="Resume")
+    file = models.FileField(upload_to="resumes/")
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-updated_at"]
+
+    def __str__(self):
+        return self.title

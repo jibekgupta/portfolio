@@ -1,46 +1,39 @@
 {% extends "portfolio_web/base.html" %}
 {% load static %}
 
-{% block title %}Projects | Jibek{% endblock %}
-
-{% block page_css %}
-<link rel="stylesheet" href="{% static 'portfolio_web/css/projects.css' %}">
-{% endblock %}
+{% block title %}Projects · Jibek Gupta{% endblock %}
 
 {% block content %}
-  <section class="projects-header">
-    <div class="card projects-intro">
-      <h1>Projects</h1>
-      <p class="muted projects-subtitle">
-        All projects I’ve built — click into any project for details.
-      </p>
+  <section class="container section" aria-labelledby="projects-page-title">
+    <div class="section-title">
+      <span class="ghost">Projects</span>
+      <h2 id="projects-page-title">All Projects</h2>
     </div>
-  </section>
 
-  <section class="grid projects-grid">
-    {% for p in projects %}
-      <article class="col-4 card project-card">
-        <h3 class="project-title">
-          <a href="{% url 'project_detail' p.slug %}">{{ p.title }}</a>
-        </h3>
-
-        <p class="muted project-blurb">{{ p.intro_blurb }}</p>
-
-        <div class="badges project-badges">
-          {% if p.is_featured %}
-            <span class="badge">Featured</span>
-          {% endif %}
-          {% if p.tech_stack %}
-            <span class="badge">{{ p.tech_stack }}</span>
+    <div class="projects">
+      {% for p in projects %}
+      <article class="card project-card">
+        <div class="project-header">
+          <h3>{{ p.title }}</h3>
+          {% if p.technologies_list %}
+          <div class="tags">
+            {% for t in p.technologies_list %}
+            <span class="tag">{{ t }}</span>
+            {% endfor %}
+          </div>
           {% endif %}
         </div>
-      </article>
-    {% empty %}
-      <div class="col-12 card">
-        <p class="muted" style="margin:0;">
-          No projects yet — add some in Admin → Projects.
+        <p class="muted">
+          {% if p.intro_blurb %}{{ p.intro_blurb }}{% else %}{{ p.description|truncatechars:160 }}{% endif %}
         </p>
-      </div>
-    {% endfor %}
+        <div class="btns project-actions">
+          {% if p.github_url %}<a class="btn dark-outline" href="{{ p.github_url }}" target="_blank" rel="noopener noreferrer">Code</a>{% endif %}
+          {% if p.live_url %}<a class="btn primary" href="{{ p.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>{% endif %}
+        </div>
+      </article>
+      {% empty %}
+      <p class="muted">No projects yet. Add projects in the admin panel.</p>
+      {% endfor %}
+    </div>
   </section>
 {% endblock %}

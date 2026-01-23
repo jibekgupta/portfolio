@@ -1,141 +1,246 @@
 {% extends "portfolio_web/base.html" %}
 {% load static %}
 
-{% block title %}Home | Jibek{% endblock %}
-
-{% block page_css %}
-<link rel="stylesheet" href="{% static 'portfolio_web/css/home.css' %}?v=1">
-
-
-{% endblock %}
-
 {% block content %}
+
   <!-- HERO -->
-  <section class="grid home-hero">
-    <div class="col-8">
-      <div class="card hero-card">
-        <p class="hero-kicker">CS Undergrad @ Howard • Graduating May 2026</p>
+  <section id="home" class="container hero" aria-labelledby="home-title">
+    <h1 id="home-title"><span class="name-accent name-animated">Jibek Gupta</span></h1>
+    <div class="role role-animated">Data, Machine Learning &amp; Software Systems</div>
+    <p class="muted hero-blurb">
+        Skills across data analytics, machine learning, and AI to build impactful, data-driven software solutions.
+    </p>
+    <div class="btns center btns-animated">
+      <a class="btn primary" href="#projects">View Projects</a>
+      {% if resume and resume.file %}
+      <a class="btn dark-outline" href="{{ resume.file.url }}" target="_blank" rel="noopener noreferrer">Download Resume</a>
+      {% else %}
+      <a class="btn dark-outline" href="#contact">Download Resume</a>
+      {% endif %}
+      <a class="btn dark-outline" href="#contact">Contact Me</a>
+    </div>
+  </section>
 
-        <h1 class="hero-title">
-          I build data & ML systems that turn messy data into usable products.
-        </h1>
+  <!-- ABOUT & SKILLS -->
+  <section id="about" class="container section about-section" aria-labelledby="about-title">
+    <div class="section-title about-title">
+      <span class="ghost">About</span>
+      <h2 id="about-title">About Me</h2>
+    </div>
 
-        <p class="muted hero-subtitle">
-          I’ve worked on Retrieval-Augmented Generation (RAG), NLP, and analytics pipelines—shipping tools like a legal
-          Q&amp;A assistant and a census analytics dashboard.
-        </p>
-
-        <div class="badges hero-badges">
-          <span class="badge">Python</span>
-          <span class="badge">SQL</span>
-          <span class="badge">NLP • RAG</span>
-          <span class="badge">PyTorch</span>
-          <span class="badge">ChromaDB</span>
-          <span class="badge">AWS</span>
+    <div class="grid about-grid">
+      <div class="col-5">
+        <div class="about-photo-card">
+          <img class="about-photo-img" src="{% static 'portfolio_web/img/jibek.jpeg' %}" alt="Jibek Gupta">
         </div>
+      </div>
 
-        <div class="btns hero-cta">
-          <a class="btn primary" href="{% url 'projects' %}">View Projects</a>
-        </div>
-
-        <div class="hero-links">
-          <a class="pill" href="https://github.com/jibekgupta" target="_blank" rel="noopener">
-            <i class="fab fa-github" aria-hidden="true"></i> GitHub
-          </a>
-          <a class="pill" href="https://www.linkedin.com/in/jibekgupta/" target="_blank" rel="noopener">
-            <i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn
-          </a>
+      <div class="col-7">
+        <div class="about-content">
+          <h3 class="about-title about-title-animated">Learning, Building, and Solving with Data</h3>
+          <p class="muted">
+            I am a Computer Science student at Howard University with a strong interest in data analytics, machine learning, and software systems. I enjoy working with data to understand problems, build practical solutions, and develop systems that are reliable, scalable, and easy to use.
+          </p>
+          <div class="about-quote">
+            I'm eager to connect with professionals and organizations seeking to drive impact
+            with data science and software solutions. Let's create something meaningful together!
+          </div>
+          <div class="btns">
+            <a class="btn dark-outline" href="https://github.com/jibekgupta" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a class="btn dark-outline" href="https://linkedin.com/in/jibekgupta/" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- QUICK STATS / PROOF -->
-        <!-- RIGHT COLUMN: EDUCATION -->
-    <div class="col-4">
-      <div class="card education-card">
+    <div id="skills" class="card skills-card">
+      <h3>Skills</h3>
+      <div class="skills-list">
+        <div class="skill-item">
+          <i class="fa-brands fa-python"></i>
+          <div>
+            <h4>Python</h4>
+            <p class="muted">Data analysis, automation, and ML workflows using Pandas and NumPy.</p>
+          </div>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-brain"></i>
+          <div>
+            <h4>Machine Learning</h4>
+            <p class="muted">Modeling with Scikit-learn and PyTorch for predictive insights.</p>
+          </div>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-database"></i>
+          <div>
+            <h4>SQL</h4>
+            <p class="muted">Querying, joins, and data validation across relational databases.</p>
+          </div>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-chart-simple"></i>
+          <div>
+            <h4>Power BI</h4>
+            <p class="muted">Dashboards, KPIs, and storytelling for stakeholders.</p>
+          </div>
+        </div>
+        <div class="skill-item">
+          <i class="fa-brands fa-git-alt"></i>
+          <div>
+            <h4>Git &amp; GitHub</h4>
+            <p class="muted">Version control, collaboration, and clean code history.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume" class="container section section-tight">
+
+    <div class="resume-grid">
+      <div class="card resume-card">
+        <h3>Professional Experience</h3>
+        <ul class="timeline">
+          {% for exp in experiences %}
+          <li>
+            <span class="date-badge">
+              {% if exp.start_date %}{{ exp.start_date|date:"Y" }}{% endif %}
+              –
+              {% if exp.is_current %}Present{% else %}{% if exp.end_date %}{{ exp.end_date|date:"Y" }}{% endif %}{% endif %}
+            </span>
+            <h4>{{ exp.role }}</h4>
+            <div class="faint company">
+              {{ exp.organization }}{% if exp.location %} · {{ exp.location }}{% endif %}
+            </div>
+            {% if exp.description %}<p class="muted">{{ exp.description|linebreaksbr }}</p>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="card resume-card">
         <h3>Education</h3>
+        <ul class="timeline">
+          {% for ed in education %}
+          <li>
+            <span class="date-badge">
+              {% if ed.start_year %}{{ ed.start_year|date:"Y" }}{% endif %}
+              –
+              {% if ed.end_year %}{{ ed.end_year|date:"Y" }}{% endif %}
+            </span>
+            <h4>{{ ed.degree }}</h4>
+            <div class="faint">{{ ed.institution }}</div>
+            {% if ed.gpa %}<div class="accent gpa">GPA: {{ ed.gpa }}</div>{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-        {% for edu in education %}
-          <p class="muted edu-lines">
-            <b>{{ edu.institution }}</b><br>
-            {{ edu.degree }}{% if edu.field %} — {{ edu.field }}{% endif %}<br>
-            {% if edu.end_year %}Graduation: {{ edu.end_year }}{% endif %}
-            {% if edu.gpa %}<br>GPA: {{ edu.gpa }}{% endif %}
-          </p>
-
-          {% if edu.focus %}
-            <hr class="sep">
-            <p class="muted edu-focus">{{ edu.focus }}</p>
+    <div class="card certifications-card">
+      <h3>Certifications &amp; Recognition</h3>
+      <div class="cert-grid">
+        {% for cert in certificates %}
+        <article class="cert-card">
+          <h4>{{ cert.title }}</h4>
+          {% if cert.issuer or cert.issued_date %}
+          <div class="faint cert-meta">
+            {% if cert.issuer %}{{ cert.issuer }}{% endif %}
+            {% if cert.issued_date %}{% if cert.issuer %} · {% endif %}{{ cert.issued_date|date:"M Y" }}{% endif %}
+          </div>
           {% endif %}
+          {% if cert.description %}<p class="muted">{{ cert.description }}</p>{% endif %}
+        </article>
         {% empty %}
-          <p class="muted">Add education in Admin → Education.</p>
+        <p class="muted">Add certificates from the admin panel to show them here.</p>
         {% endfor %}
       </div>
     </div>
-
   </section>
 
-  <!-- WHAT I DO -->
-  <section class="home-section">
-    <h2>What I do</h2>
-    <p class="muted">A quick snapshot of how I work end-to-end.</p>
-
-    <div class="grid home-cards">
-      <article class="col-4 card mini-card">
-        <h3>Data & Analytics</h3>
-        <p class="muted">
-          ETL pipelines, analysis, and dashboards for decision-making (Pandas, NumPy, visualization).
-        </p>
-      </article>
-
-      <article class="col-4 card mini-card">
-        <h3>Machine Learning</h3>
-        <p class="muted">
-          Build and evaluate models with strong baselines, metrics, and iteration loops (scikit-learn, PyTorch).
-        </p>
-      </article>
-
-      <article class="col-4 card mini-card">
-        <h3>NLP + RAG</h3>
-        <p class="muted">
-          Retrieval pipelines, embeddings, and evaluation to improve answer quality (Transformers, ChromaDB).
-        </p>
-      </article>
-    </div>
-  </section>
-
-  <!-- FEATURED PROJECTS -->
-  <section class="home-featured">
-    <div class="home-featured-head">
-      <div>
-        <h2>Featured Projects</h2>
-        <p class="muted">A few highlights — see the full list on the Projects page.</p>
-      </div>
-      <div>
-        <a class="pill" href="{% url 'projects' %}">View all →</a>
-      </div>
+  <!-- PROJECTS -->
+  <section id="projects" class="container section" aria-labelledby="projects-title">
+    <div class="section-title">
+      <span class="ghost">Learning &amp; Building</span>
+      <h2 id="projects-title">Featured Projects</h2>
     </div>
 
-    <div class="grid featured-grid">
-      {% for p in featured_projects %}
-        <article class="col-4 card project-card">
-          <h3 class="project-title">
-            <a href="{% url 'project_detail' p.slug %}">{{ p.title }}</a>
-          </h3>
-
-          <p class="muted project-blurb">{{ p.intro_blurb }}</p>
-
-          {% if p.tech_stack %}
-            <div class="badges">
-              <span class="badge">{{ p.tech_stack }}</span>
-            </div>
+    <div class="projects">
+      {% for p in projects %}
+      <article class="card project-card">
+        <div class="project-header">
+          <h3>{{ p.title }}</h3>
+          {% if p.technologies_list %}
+          <div class="tags">
+            {% for t in p.technologies_list %}
+            <span class="tag">{{ t }}</span>
+            {% endfor %}
+          </div>
           {% endif %}
-        </article>
-      {% empty %}
-        <div class="col-12 card">
-          <p class="muted" style="margin:0;">No featured projects yet. Add some in Admin → Projects.</p>
         </div>
+        <p class="muted">
+          {% if p.intro_blurb %}{{ p.intro_blurb }}{% else %}{{ p.description|truncatechars:140 }}{% endif %}
+        </p>
+        <div class="btns project-actions">
+          {% if p.github_url %}<a class="btn dark-outline" href="{{ p.github_url }}" target="_blank" rel="noopener noreferrer">Code</a>{% endif %}
+          {% if p.live_url %}<a class="btn primary" href="{{ p.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>{% endif %}
+        </div>
+      </article>
       {% endfor %}
     </div>
+    <div class="btns center mt-20">
+      <a class="btn dark-outline" href="{% url 'projects' %}">View All Projects</a>
+    </div>
   </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="container section" aria-labelledby="contact-title">
+    <div class="section-title">
+      <span class="ghost">Contact</span>
+      <h2 id="contact-title">Get In Touch</h2>
+    </div>
+
+    <div class="grid">
+        <div class="col-6">
+            <div class="contact-icons">
+                <div class="contact-card">
+                    <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+                    <p class="contact-email">firstlastname059@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <p>Washington, DC</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <form method="post" class="form">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label class="sr-only" for="contact-name">Full Name</label>
+                        <input id="contact-name" type="text" name="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="field">
+                        <label class="sr-only" for="contact-email">Email Address</label>
+                        <input id="contact-email" type="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="field">
+                        <label class="sr-only" for="contact-message">Project Details</label>
+                        <textarea id="contact-message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+
 {% endblock %}
