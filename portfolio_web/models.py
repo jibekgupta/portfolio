@@ -88,6 +88,7 @@ class Certificate(models.Model):
     description = models.TextField(blank=True)
     issuer = models.CharField(max_length=200, blank=True)
     issued_date = models.DateField(null=True, blank=True)
+    credential_url = models.URLField(blank=True)
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:

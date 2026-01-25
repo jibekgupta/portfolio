@@ -347,6 +347,16 @@ h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
 .cert-meta {
   margin-bottom: 10px;
 }
+.cert-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cyan);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.cert-link:hover { text-decoration: underline; }
 
 /* ---------- Resume ---------- */
 .resume-grid {

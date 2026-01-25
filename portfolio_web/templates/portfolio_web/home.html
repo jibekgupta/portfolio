@@ -163,6 +163,9 @@
           </div>
           {% endif %}
           {% if cert.description %}<p class="muted">{{ cert.description }}</p>{% endif %}
+          {% if cert.credential_url %}
+          <a class="cert-link" href="{{ cert.credential_url }}" target="_blank" rel="noopener noreferrer">Credential</a>
+          {% endif %}
         </article>
         {% empty %}
         <p class="muted">Add certificates from the admin panel to show them here.</p>

@@ -35,8 +35,8 @@ class EducationAdmin(admin.ModelAdmin):
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
-    list_display = ("title", "issuer", "issued_date", "sort_order")
-    search_fields = ("title", "issuer")
+    list_display = ("title", "issuer", "issued_date", "credential_url", "sort_order")
+    search_fields = ("title", "issuer", "credential_url")
 
 
 @admin.register(Resume)
