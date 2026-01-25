@@ -5,7 +5,13 @@
 
   <!-- HERO -->
   <section id="home" class="container hero" aria-labelledby="home-title">
-    <h1 id="home-title"><span class="name-accent name-animated">Jibek Gupta</span></h1>
+    <div class="hero-badge">
+      <span class="status-dot"></span>
+      Open to opportunities
+    </div>
+    <h1 id="home-title">
+      <span class="hero-muted">Hi, I'm</span> <span class="name-accent name-animated">Jibek Gupta</span>
+    </h1>
     <div class="role role-animated">Data, Machine Learning &amp; Software Systems</div>
     <p class="muted hero-blurb">
         Skills across data analytics, machine learning, and AI to build impactful, data-driven software solutions.
@@ -43,7 +49,8 @@
           </p>
           <div class="about-quote">
             I'm eager to connect with professionals and organizations seeking to drive impact
-            with data science and software solutions. Let's create something meaningful together!
+            with data science and software solutions.
+            <span class="quote-highlight">Let's create something meaningful together!</span>
           </div>
           <div class="btns">
             <a class="btn dark-outline" href="https://github.com/jibekgupta" target="_blank" rel="noopener noreferrer">
@@ -136,7 +143,7 @@
             </span>
             <h4>{{ ed.degree }}</h4>
             <div class="faint">{{ ed.institution }}</div>
-            {% if ed.gpa %}<div class="accent gpa">GPA: {{ ed.gpa }}</div>{% endif %}
+            {% if ed.gpa %}<div class="accent gpa">CGPA: {{ ed.gpa }}</div>{% endif %}
           </li>
           {% endfor %}
         </ul>
@@ -188,8 +195,14 @@
           {% if p.intro_blurb %}{{ p.intro_blurb }}{% else %}{{ p.description|truncatechars:140 }}{% endif %}
         </p>
         <div class="btns project-actions">
-          {% if p.github_url %}<a class="btn dark-outline" href="{{ p.github_url }}" target="_blank" rel="noopener noreferrer">Code</a>{% endif %}
-          {% if p.live_url %}<a class="btn primary" href="{{ p.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>{% endif %}
+          {% if p.github_url %}
+          <a class="btn dark-outline" href="{{ p.github_url }}" target="_blank" rel="noopener noreferrer">Code</a>
+          {% else %}
+          <span class="btn dark-outline is-disabled">Code</span>
+          {% endif %}
+          {% if p.live_url %}
+          <a class="btn primary" href="{{ p.live_url }}" target="_blank" rel="noopener noreferrer">Live Demo</a>
+          {% endif %}
         </div>
       </article>
       {% endfor %}
@@ -211,7 +224,7 @@
             <div class="contact-icons">
                 <div class="contact-card">
                     <div class="icon"><i class="fa-solid fa-envelope"></i></div>
-                    <p class="contact-email">firstlastname059@gmail.com</p>
+                    <p class="contact-email">jibekgupta059@gmail.com</p>
                 </div>
                 <div class="contact-card">
                     <div class="icon"><i class="fa-solid fa-location-dot"></i></div>

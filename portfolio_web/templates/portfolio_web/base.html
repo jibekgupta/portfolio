@@ -69,6 +69,15 @@
       header.classList.toggle('is-scrolled', window.scrollY > 50);
     });
 
+    // On refresh, drop any hash and stay at top
+    window.addEventListener('load', () => {
+      if (window.location.hash) {
+        const cleanUrl = window.location.pathname + window.location.search;
+        window.history.replaceState(null, '', cleanUrl);
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    });
+
   </script>
 </body>
 </html>
